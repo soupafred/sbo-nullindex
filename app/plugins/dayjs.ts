@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import utc from 'dayjs/plugin/utc';
 
 export default defineNuxtPlugin(() => {
   // Extend once during app startup
@@ -12,7 +12,7 @@ export default defineNuxtPlugin(() => {
   // Expose globally as `$dayjs`
   return {
     provide: {
-      dayjs,
-    },
+      dayjs
+    }
   };
 });
