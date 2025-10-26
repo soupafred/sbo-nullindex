@@ -1,25 +1,16 @@
 // @ts-check
 import withNuxt from './.nuxt/eslint.config.mjs';
-import prettier from 'eslint-plugin-prettier';
-import importPlugin from 'eslint-plugin-import';
 
 export default withNuxt({
-  plugins: {
-    prettier,
-    import: importPlugin,
-  },
   rules: {
-    // Prettier integration
-    'prettier/prettier': ['error'],
-
     // Import order for cleaner structure
     'import/order': [
       'warn',
       {
         groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
         'newlines-between': 'always',
-        alphabetize: { order: 'asc', caseInsensitive: true },
-      },
+        alphabetize: { order: 'asc', caseInsensitive: true }
+      }
     ],
 
     // General
@@ -27,6 +18,8 @@ export default withNuxt({
     'no-console': ['warn', { allow: ['warn', 'error'] }],
 
     // Vue-specific tweaks
-    'vue/multi-word-component-names': 'off', // allow single-word component names
-  },
+    'vue/multi-word-component-names': 'off',
+    'vue/no-multiple-template-root': 'off',
+    'vue/max-attributes-per-line': ['error', { singleline: 3 }]
+  }
 });

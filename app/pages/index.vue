@@ -4,10 +4,12 @@
 </template>
 
 <script setup lang="ts">
-  const { data: home } = await useAsyncData(() => queryCollection('content').path('/example').first());
+const { data: home } = await useAsyncData(() =>
+  queryCollection('content').path('/example').first()
+);
 
-  useSeoMeta({
-    title: home.value?.title,
-    description: home.value?.description,
-  });
+useSeoMeta({
+  title: home.value?.title,
+  description: home.value?.description
+});
 </script>
