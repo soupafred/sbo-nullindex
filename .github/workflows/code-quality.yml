@@ -17,6 +17,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
+
       # 2️⃣ Setup Node.js with pnpm caching
       - name: Setup Node.js
         uses: actions/setup-node@v4
