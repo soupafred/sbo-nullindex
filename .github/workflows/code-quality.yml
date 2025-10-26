@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - releases/dev
+      - releases/prod
 
 jobs:
   lint-and-format:
@@ -15,6 +16,9 @@ jobs:
       # 1️⃣ Checkout the PR code
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
 
       # 2️⃣ Setup Node.js with pnpm caching
       - name: Setup Node.js
