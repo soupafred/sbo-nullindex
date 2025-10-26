@@ -1,12 +1,12 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 export const useStore = defineStore('main', {
   state: () => {
     return {
-      someState: 'hello pinia',
-    }
+      someState: 'hello pinia'
+    };
   },
   persist: {
-    storage: piniaPluginPersistedstate.sessionStorage(),
-  },
-})
+    storage: piniaPluginPersistedstate.sessionStorage()
+  }
+});

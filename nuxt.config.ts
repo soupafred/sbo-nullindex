@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from '@tailwindcss/vite';
 import { defineNuxtConfig } from 'nuxt/config';
-import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -17,11 +17,11 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/ui',
     '@pinia/nuxt',
-    'pinia-plugin-persistedstate',
+    'pinia-plugin-persistedstate'
   ],
   css: ['~/assets/css/main.css'],
   vite: {
-    plugins: [ tailwindcss() ],
+    plugins: [tailwindcss()]
   },
   i18n: {
     // baseUrl: process.env.NUXT_PUBLIC_SITE_URL,
@@ -30,13 +30,13 @@ export default defineNuxtConfig({
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'user-locale',
-      redirectOn: 'root',
+      redirectOn: 'root'
     },
     locales: [
       { code: 'en', name: 'en-US', file: 'en-US.json' },
       { code: 'jp', name: 'ja-JP', file: 'ja-JP.json' },
-      { code: 'kh', name: 'km-KH', file: 'km-KH.json' },
-    ],
+      { code: 'kh', name: 'km-KH', file: 'km-KH.json' }
+    ]
   },
   icon: {
     size: '24px',
@@ -44,22 +44,15 @@ export default defineNuxtConfig({
     mode: 'css',
     cssLayer: 'base',
     serverBundle: {
-      collections: [
-        'circle-flags',
-        'flagpack',
-        'heroicons',
-        'logos',
-        'simple-icons',
-        'custom'
-      ],
+      collections: ['circle-flags', 'flagpack', 'heroicons', 'logos', 'simple-icons', 'custom']
     },
     customCollections: [
       {
         prefix: 'custom',
         dir: './app/assets/icons',
         normalizeIconName: false
-      },
-    ],
+      }
+    ]
   },
   typescript: { typeCheck: true }
-})
+});
