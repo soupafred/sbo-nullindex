@@ -1,23 +1,36 @@
-name: Code Quality
-on: [Push]
+name: Pull Request Code Quality
+
+# Trigger only on pull requests to main/develop
+on:
+  pull_request:
+    branches:
+      - main
+      - releases/dev
+
 jobs:
   lint-and-format:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
+
     steps:
+      # 1️⃣ Checkout the PR code
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Node.js with pnpm caching
       - name: Setup Node.js
-        uses: action/setup-node@v4
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'pnpm'
 
-      - name: Install Dependencies
-        run: pnpm install
+      # 3️⃣ Install dependencies
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Check Prettier
-        run: pnpm run format
+      # 4️⃣ Run Prettier check (without modifying files)
+      - name: Check Prettier formatting
+        run: pnpm run format:check
 
-      - name: ESLint
-        run: pnpm run lint
+      # 5️⃣ Run ESLint
+      - name: Run ESLint
+        run: pnpm run lint:check
