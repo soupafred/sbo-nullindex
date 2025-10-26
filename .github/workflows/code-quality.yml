@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - releases/dev
+      - releases/prod
 
 jobs:
   lint-and-format:
