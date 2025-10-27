@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="min-h-screen hidden md:block">
     <UApp>
       <NuxtLoadingIndicator />
 
@@ -7,6 +7,9 @@
         <NuxtPage />
       </NuxtLayout>
     </UApp>
+  </div>
+  <div class="min-h-screen flex items-center justify-center md:hidden px-4">
+    <p class="text-center text-lg font-extralight">This site is not available for Mobile View.</p>
   </div>
 </template>
 

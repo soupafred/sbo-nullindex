@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app';
-
-defineProps<{
-  error: NuxtError;
-}>();
-
 useSeoMeta({
   title: 'Page not found',
   description: 'We are sorry but this page could not be found.'
@@ -15,10 +9,29 @@ useHead({
     lang: 'en'
   }
 });
+
+const notFound = ref({
+  title: $t('not-found'),
+  detail: $t('not-found-detail'),
+  button: $t('not-found-back')
+});
 </script>
 
 <template>
   <UApp>
-    <UError :error="error" />
+    <UError
+      redirect="/"
+      :clear="{
+        color: 'neutral',
+        size: 'xl',
+        class: 'rounded-full',
+        label: notFound?.button
+      }"
+      :error="{
+        statusCode: 404,
+        statusMessage: notFound?.title,
+        message: notFound?.detail
+      }"
+    />
   </UApp>
 </template>
