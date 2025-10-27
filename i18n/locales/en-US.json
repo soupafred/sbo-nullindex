@@ -1,3 +1,6 @@
 {
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+  "not-found": "Page not found",
+  "not-found-detail": "The page you are looking for does not exist.",
+  "not-found-back": "Back to home"
 }
