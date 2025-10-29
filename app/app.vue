@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen hidden md:block">
+  <div class="hidden sm:block">
     <UApp>
       <NuxtLoadingIndicator />
 
@@ -8,7 +8,7 @@
       </NuxtLayout>
     </UApp>
   </div>
-  <div class="min-h-screen flex items-center justify-center md:hidden px-4">
+  <div class="min-h-screen flex items-center justify-center sm:hidden px-4">
     <p class="text-center text-lg font-extralight">This site is not available for Mobile View.</p>
   </div>
 </template>
@@ -23,7 +23,7 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { key: 'theme-color', name: 'theme-color', content: color }
   ],
-  link: [{ rel: 'icon', href: '/favicon.ico' }],
+  link: [{ rel: 'icon', href: '/something.ico' }],
   htmlAttrs: {
     lang: 'en'
   }
