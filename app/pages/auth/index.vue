@@ -43,7 +43,7 @@ definePageMeta({ layout: 'auth' });
               src="~/assets/images/img-logo-1.png"
               alt="img-preview"
               class="object-contain h-full w-full"
-            >
+            />
           </div>
         </div>
       </template>
