@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/ui',
     '@pinia/nuxt',
-    'pinia-plugin-persistedstate'
+    'pinia-plugin-persistedstate/nuxt'
   ],
   css: ['~/assets/css/main.css'],
   vite: {
@@ -54,5 +54,9 @@ export default defineNuxtConfig({
       }
     ]
   },
-  typescript: { typeCheck: true }
+  typescript: { typeCheck: true },
+  piniaPluginPersistedstate: {
+    storage: 'localStorage',
+    debug: true
+  }
 });
