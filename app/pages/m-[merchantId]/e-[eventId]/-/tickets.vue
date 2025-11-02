@@ -1,5 +1,5 @@
 <template>
-  <div>Merchant Overall Page</div>
+  <div>Event List</div>
   {{ store.name }}
 </template>
 

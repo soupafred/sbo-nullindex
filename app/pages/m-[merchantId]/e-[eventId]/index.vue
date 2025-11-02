@@ -1,5 +1,5 @@
 <template>
-  <div>Merchant Overall Page</div>
+  <div>Ticket Detail</div>
   {{ store.name }}
 </template>
 
