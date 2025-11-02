@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui';
 
+import { useMerchantStore } from '../stores/merchant';
+const merchantStore = useMerchantStore();
+merchantStore.fetchItem();
 const items = ref<NavigationMenuItem[][]>([
   [
     {
@@ -27,7 +30,7 @@ const items = ref<NavigationMenuItem[][]>([
   <div>
     <UHeader :ui="{ root: 'h-14', container: 'max-w-none xl:px-3 px-3 sm:px-3 lg:px-3' }">
       <template #left>
-        <div class="flex items-center gap-0 h-14 overflow-y-hidden">
+        <div class="flex items-center gap-0 h-14 overflow-y-hidden w-full">
           <NuxtLink to="/">
             <UAvatar
               size="lg"
@@ -38,48 +41,76 @@ const items = ref<NavigationMenuItem[][]>([
           </NuxtLink>
 
           <USeparator class="h-full ml-3" orientation="vertical" />
-          <div class="relative">
-            <USelectMenu
-              model-value="New Balance Cambodia"
-              size="xl"
-              class="h-14 cursor-pointer"
-              :avatar="{
-                src: 'https://github.com/nuxt.png',
-                size: 'md'
-              }"
-              variant="ghost"
-              trailing-icon="heroicons:chevron-up-down-solid"
-              :ui="{
-                base: 'bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 rounded-none h-full w-full px-4 pl-14 pt-6 font-bold'
-              }"
-            />
-            <label
-              class="absolute left-13 top-2 text-gray-500 transition-all duration-200 text-xs px-1"
+          <!--          <div class="relative">-->
+          <!--          <USelectMenu-->
+          <!--            model-value="New Balance Cambodia"-->
+          <!--            size="xl"-->
+          <!--            class="h-14 cursor-pointer"-->
+          <!--            :avatar="{-->
+          <!--                src: 'https://github.com/nuxt.png',-->
+          <!--                size: 'md'-->
+          <!--              }"-->
+          <!--            variant="ghost"-->
+          <!--            trailing-icon="heroicons:chevron-up-down-solid"-->
+          <!--            :ui="{-->
+          <!--                base: 'bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 rounded-none h-full w-full px-4 pl-14 pt-6'-->
+          <!--              }"-->
+          <!--          />-->
+          <!--          <label-->
+          <!--            class="absolute left-13 top-2 text-gray-500 transition-all duration-200 text-xs px-1"-->
+          <!--          >-->
+          <!--            Merchant-->
+          <!--          </label>-->
+          <!--        </div>-->
+          <!--          <USeparator class="h-full" orientation="vertical" />-->
+          <div class="flex h-14 ring-gray-200">
+            <NuxtLink
+              class="hover:bg-gray-50 hover:ring-1 ring-gray-200 h-full my-auto"
+              :to="`/m-be03227e-bed9-4db9-8349-9cf772dba2b9`"
             >
-              Merchant
-            </label>
-          </div>
-          <USeparator class="h-full py-4" orientation="vertical" />
-          <div class="relative">
-            <USelectMenu
-              model-value="New Balance Cambodia"
-              size="xl"
-              class="h-14 cursor-pointer"
-              :avatar="{
-                src: 'https://github.com/nuxt.png',
-                size: 'md'
+              <div class="h-full flex flex-row pr-3">
+                <UAvatar
+                  v-if="!merchantStore.itemGetting"
+                  size="lg"
+                  icon="i-lucide-image"
+                  class="mx-3 my-auto"
+                  alt="Benjamin Canac"
+                  :ui="{ icon: 'text-primary text-sm' }"
+                />
+                <USkeleton v-else class="mx-3 my-auto h-10 w-10 rounded-full" />
+                <div class="my-auto">
+                  <p class="text-gray-500 text-xs">Merchant</p>
+                  <p v-if="!merchantStore.itemGetting" class="text-lg text-black font-bold h6">
+                    New Balance Cambodia
+                  </p>
+                  <USkeleton v-else class="h-6 w-[200px]" />
+                </div>
+              </div>
+            </NuxtLink>
+            <USeparator class="py-3" orientation="vertical" />
+            <UPopover
+              mode="click"
+              arrow
+              :content="{
+                align: 'center',
+                side: 'bottom',
+                sideOffset: 4
               }"
-              variant="ghost"
-              trailing-icon="heroicons:chevron-up-down-solid"
-              :ui="{
-                base: 'bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 rounded-none h-full w-full px-4 pl-14 pt-6'
-              }"
-            />
-            <label
-              class="absolute left-13 top-2 text-gray-500 transition-all duration-200 text-xs px-1"
             >
-              Event
-            </label>
+              <UButton
+                icon="heroicons:chevron-up-down-solid"
+                variant="ghost"
+                color="neutral"
+                class="cursor-pointer px-2"
+                :loading="merchantStore.itemsGetting"
+                :ui="{
+                  base: 'rounded-none ring-gray-200 hover:ring-1 active:!bg-gray-100 data-[state=open]:bg-gray-100 data-[state=open]:ring-1'
+                }"
+              />
+              <template #content>
+                <Placeholder class="size-48 m-4 inline-flex" />
+              </template>
+            </UPopover>
           </div>
           <USeparator class="h-full" orientation="vertical" />
         </div>
