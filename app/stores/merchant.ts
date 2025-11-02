@@ -46,6 +46,7 @@ export const useMerchantStore = defineStore('merchant', {
         this.item = response;
       } finally {
         this.itemsGetting = false;
+        this.itemGetting = false;
       }
     }
   },

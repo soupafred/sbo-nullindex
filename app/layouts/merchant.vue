@@ -28,7 +28,7 @@ const items = ref<NavigationMenuItem[][]>([
 
 <template>
   <div>
-    <UHeader :ui="{ root: 'h-14', container: 'max-w-none xl:px-3 px-3 sm:px-3 lg:px-3' }">
+    <UHeader :ui="{ root: 'h-14 static', container: 'max-w-none xl:px-3 px-3 sm:px-3 lg:px-3' }">
       <template #left>
         <div class="flex items-center gap-0 h-14 overflow-y-hidden w-full">
           <NuxtLink to="/">
@@ -41,45 +41,23 @@ const items = ref<NavigationMenuItem[][]>([
           </NuxtLink>
 
           <USeparator class="h-full ml-3" orientation="vertical" />
-          <!--          <div class="relative">-->
-          <!--          <USelectMenu-->
-          <!--            model-value="New Balance Cambodia"-->
-          <!--            size="xl"-->
-          <!--            class="h-14 cursor-pointer"-->
-          <!--            :avatar="{-->
-          <!--                src: 'https://github.com/nuxt.png',-->
-          <!--                size: 'md'-->
-          <!--              }"-->
-          <!--            variant="ghost"-->
-          <!--            trailing-icon="heroicons:chevron-up-down-solid"-->
-          <!--            :ui="{-->
-          <!--                base: 'bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 rounded-none h-full w-full px-4 pl-14 pt-6'-->
-          <!--              }"-->
-          <!--          />-->
-          <!--          <label-->
-          <!--            class="absolute left-13 top-2 text-gray-500 transition-all duration-200 text-xs px-1"-->
-          <!--          >-->
-          <!--            Merchant-->
-          <!--          </label>-->
-          <!--        </div>-->
-          <!--          <USeparator class="h-full" orientation="vertical" />-->
-          <div class="flex h-14 ring-gray-200">
+          <div class="flex h-14 ring-neutral-200">
             <NuxtLink
-              class="hover:bg-gray-50 hover:ring-1 ring-gray-200 h-full my-auto"
+              class="hover:bg-neutral-50 hover:ring-1 ring-neutral-200 h-full my-auto"
               :to="`/m-be03227e-bed9-4db9-8349-9cf772dba2b9`"
             >
               <div class="h-full flex flex-row pr-3">
                 <UAvatar
                   v-if="!merchantStore.itemGetting"
                   size="lg"
-                  icon="i-lucide-image"
+                  src="https://images.bookme.plus/rails/active_storage/blobs/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaERyIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--fe87151cf2aeab3b02bccdff51cdc13332417286/KV_1600x900.jpg"
                   class="mx-3 my-auto"
                   alt="Benjamin Canac"
                   :ui="{ icon: 'text-primary text-sm' }"
                 />
                 <USkeleton v-else class="mx-3 my-auto h-10 w-10 rounded-full" />
                 <div class="my-auto">
-                  <p class="text-gray-500 text-xs">Merchant</p>
+                  <p class="text-neutral-500 text-[0.6rem] antialiasing">Merchant</p>
                   <p v-if="!merchantStore.itemGetting" class="text-lg text-black font-bold h6">
                     New Balance Cambodia
                   </p>
@@ -104,11 +82,68 @@ const items = ref<NavigationMenuItem[][]>([
                 class="cursor-pointer px-2"
                 :loading="merchantStore.itemsGetting"
                 :ui="{
-                  base: 'rounded-none ring-gray-200 hover:ring-1 active:!bg-gray-100 data-[state=open]:bg-gray-100 data-[state=open]:ring-1'
+                  base: 'rounded-none ring-neutral-200 hover:ring-1 active:!bg-neutral-100 data-[state=open]:bg-neutral-100 data-[state=open]:ring-1'
                 }"
               />
               <template #content>
-                <Placeholder class="size-48 m-4 inline-flex" />
+                <div class="flex items-center gap-2">
+                  <div>
+                    <UInput
+                      icon="i-lucide-search"
+                      size="xl"
+                      variant="soft"
+                      color="primary"
+                      :ui="{ base: 'rounded-none rounded-t-md py-3' }"
+                      placeholder="Search..."
+                    />
+                    <USeparator orientation="horizontal" />
+                    <div class="flex flex-col gap-2 p-2 py-2">
+                      <div>
+                        <p class="text-xs text-neutral-500 px-3">Merchant</p>
+                      </div>
+                      <UButton
+                        :avatar="{
+                          src: 'https://github.com/nuxt.png'
+                        }"
+                        size="xl"
+                        color="neutral"
+                        active-variant="soft"
+                        variant="ghost"
+                        :ui="{ base: 'py-2 rounded-lg' }"
+                        :to="`/m-be03227e-bed9-4db9-8349-9cf772dba2b9`"
+                      >
+                        Button
+                      </UButton>
+
+                      <UButton
+                        :avatar="{
+                          src: 'https://github.com/nuxt.png'
+                        }"
+                        size="xl"
+                        color="neutral"
+                        active-variant="soft"
+                        variant="ghost"
+                        :ui="{ base: 'py-2 rounded-lg' }"
+                        :to="`/m-be03227e-bed9-4db9-8349-9cf772dba2b2`"
+                      >
+                        Button
+                      </UButton>
+
+                      <USeparator class="px-0" orientation="horizontal" />
+                      <UButton
+                        icon="heroicons:plus-circle"
+                        size="xl"
+                        color="neutral"
+                        active-variant="soft"
+                        variant="ghost"
+                        :ui="{ base: 'py-2 rounded-lg' }"
+                        :to="`/m-new`"
+                      >
+                        Create New
+                      </UButton>
+                    </div>
+                  </div>
+                </div>
               </template>
             </UPopover>
           </div>
@@ -116,19 +151,26 @@ const items = ref<NavigationMenuItem[][]>([
         </div>
       </template>
     </UHeader>
-    <UNavigationMenu
-      color="neutral"
-      :items="items"
-      class="w-full px-3"
-      :ui="{ item: 'py-1', link: 'px-3 py-2 aria-[current=page]:font-medium' }"
-      highlight
-      highlight-color="primary"
-    />
-    <USeparator orientation="horizontal" />
-    <UContainer>
-      <div class="text-blue-50">dd</div>
-      <slot />
-    </UContainer>
+    <UHeader :ui="{ root: 'h-12', container: 'max-w-none xl:px-0 px-0 sm:px-0 lg:px-0' }">
+      <template #left>
+        <UNavigationMenu
+          color="neutral"
+          :items="items"
+          class="w-full px-3"
+          :ui="{ item: 'py-1', link: 'px-3 py-2 aria-[current=page]:font-medium' }"
+          highlight
+          highlight-color="primary"
+        />
+      </template>
+    </UHeader>
+
+    <!--    <USeparator orientation="horizontal" />-->
+
+    <div class="bg-neutral-50 h-[100vh]">
+      <UContainer>
+        <slot />
+      </UContainer>
+    </div>
   </div>
 </template>
 
