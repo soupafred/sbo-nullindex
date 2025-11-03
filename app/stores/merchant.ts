@@ -1,6 +1,8 @@
+import { FetchError } from 'ofetch';
 import { defineStore } from 'pinia';
 
 import { useAuthStore } from './auth';
+import type { ApiResponse, ApiErrorResponse } from '../types/api';
 import type { Merchant } from '../types/merchant';
 
 export const useMerchantStore = defineStore('merchant', {
@@ -12,7 +14,7 @@ export const useMerchantStore = defineStore('merchant', {
     itemPosting: boolean;
     itemPutting: boolean;
     itemDeleting: boolean;
-    itemError: string | null;
+    itemError: ApiErrorResponse | null;
 
     items: Merchant[];
     itemsGetting: boolean;
@@ -35,18 +37,45 @@ export const useMerchantStore = defineStore('merchant', {
   },
   getters: {},
   actions: {
-    async fetchItem() {
+    async fetchItem(uuid: string) {
+      const authStore = useAuthStore();
+      const accessToken = authStore.accessToken;
+      this.itemGetting = true;
+      this.itemError = null;
+
+      try {
+        const response = await $fetch<ApiResponse<Merchant>>(this.endpoint + '/' + uuid, {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        this.item = response.data;
+      } catch (error) {
+        if (error instanceof FetchError) {
+          // This is the custom error from your original code's try block,
+          // or one you threw in the Response check above.
+          this.itemError = error.data;
+          console.log('error', { ...this.itemError });
+        } else {
+          // 3. The error is a genuine network error (e.g., 'Failed to fetch') or other unexpected exception
+          console.error('An unexpected error occurred:', error);
+        }
+      } finally {
+        this.itemGetting = false;
+      }
+    },
+    async fetchItems() {
       const authStore = useAuthStore();
       const accessToken = authStore.accessToken;
       this.itemsGetting = true;
       try {
-        const response = await $fetch<Merchant>(this.endpoint, {
+        const response = await $fetch<ApiResponse<Merchant[]>>(this.endpoint, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
-        this.item = response;
+        this.items = response.data;
+      } catch (error) {
+        console.log('error', error);
+        this.itemsError = (error as Error).message;
       } finally {
         this.itemsGetting = false;
-        this.itemGetting = false;
       }
     }
   },

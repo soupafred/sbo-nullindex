@@ -1,6 +1,4 @@
-<template>
-  <div>Merchant Overall List Page</div>
-</template>
+<template>Overview</template>
 
 <script setup lang="ts">
 definePageMeta({

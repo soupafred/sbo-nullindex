@@ -1,29 +1,10 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui';
-
+import { useApplicationHeaderStore } from '../stores/application-header';
 import { useMerchantStore } from '../stores/merchant';
+
 const merchantStore = useMerchantStore();
-merchantStore.fetchItem();
-const items = ref<NavigationMenuItem[][]>([
-  [
-    {
-      label: 'Overview',
-      to: '/m-be03227e-bed9-4db9-8349-9cf772dba2b9'
-    },
-    {
-      label: 'Events',
-      to: '/m-be03227e-bed9-4db9-8349-9cf772dba2b9/-/events'
-    },
-    {
-      label: 'Members',
-      to: '/m-be03227e-bed9-4db9-8349-9cf772dba2b9/-/members'
-    },
-    {
-      label: 'Settings',
-      to: '/m-be03227e-bed9-4db9-8349-9cf772dba2b9/-/settings'
-    }
-  ]
-]);
+const applicationHeaderStore = useApplicationHeaderStore();
+merchantStore.fetchItems();
 </script>
 
 <template>
@@ -34,37 +15,65 @@ const items = ref<NavigationMenuItem[][]>([
           <NuxtLink to="/">
             <UAvatar
               size="lg"
-              class="rounded-none squircle"
-              src="icons/something-logo-light.svg"
+              class="rounded-lg squircle"
+              src="https://attendance.techostartup.center/tsc-logo.png"
               alt="Benjamin Canac"
             />
           </NuxtLink>
-
           <USeparator class="h-full ml-3" orientation="vertical" />
           <div class="flex h-14 ring-neutral-200">
             <NuxtLink
+              v-if="!merchantStore.itemError"
               class="hover:bg-neutral-50 hover:ring-1 ring-neutral-200 h-full my-auto"
-              :to="`/m-be03227e-bed9-4db9-8349-9cf772dba2b9`"
+              :to="`/m-${applicationHeaderStore.breadcrumb ? applicationHeaderStore.breadcrumb.resource.id : ''}/-/overview`"
             >
-              <div class="h-full flex flex-row pr-3">
+              <div class="h-full min-w-75 flex flex-row pr-3">
                 <UAvatar
-                  v-if="!merchantStore.itemGetting"
+                  v-if="!merchantStore.itemGetting && applicationHeaderStore.breadcrumb"
                   size="lg"
-                  src="https://images.bookme.plus/rails/active_storage/blobs/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaERyIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--fe87151cf2aeab3b02bccdff51cdc13332417286/KV_1600x900.jpg"
+                  :src="applicationHeaderStore.breadcrumb.resource.logo_url"
                   class="mx-3 my-auto"
-                  alt="Benjamin Canac"
+                  :alt="applicationHeaderStore.breadcrumb.resource.name"
                   :ui="{ icon: 'text-primary text-sm' }"
                 />
-                <USkeleton v-else class="mx-3 my-auto h-10 w-10 rounded-full" />
+                <USkeleton v-else class="mx-3 my-auto h-9 w-9 rounded-full" />
                 <div class="my-auto">
-                  <p class="text-neutral-500 text-[0.6rem] antialiasing">Merchant</p>
-                  <p v-if="!merchantStore.itemGetting" class="text-lg text-black font-bold h6">
-                    New Balance Cambodia
+                  <p
+                    v-if="!merchantStore.itemGetting && applicationHeaderStore.breadcrumb"
+                    class="text-neutral-500 text-[0.6rem] antialiasing"
+                  >
+                    {{ $t('common.merchant') }}
                   </p>
-                  <USkeleton v-else class="h-6 w-[200px]" />
+                  <USkeleton v-else class="h-[0.6rem] mb-1 min-w-55" />
+                  <p
+                    v-if="!merchantStore.itemGetting && applicationHeaderStore.breadcrumb"
+                    class="text-lg antialiasing"
+                  >
+                    {{ applicationHeaderStore.breadcrumb.resource.name }}
+                  </p>
+                  <USkeleton v-else class="h-7 min-w-55" />
                 </div>
               </div>
             </NuxtLink>
+            <div v-else class="h-full min-w-75 p-3">
+              <!--              <UAlert-->
+              <!--                color="neutral"-->
+              <!--                variant="soft"-->
+              <!--                :title="merchantStore.itemError.message || $t('common.errorOccurred')"-->
+              <!--                icon="heroicons:exclamation-circle"-->
+              <!--                :ui="{ root: 'rounded-none py-[18px]', icon: 'shrink-0 size-5 my-auto',}"-->
+              <!--              />-->
+              <div class="d-flex flex-row">
+                <div>
+                  <p class="text-neutral-500 text-[0.6rem] antialiasing">
+                    Error - {{ merchantStore.itemError.code }}
+                  </p>
+                  <p class="antialiasing">
+                    {{ merchantStore.itemError.message }}
+                  </p>
+                </div>
+              </div>
+            </div>
             <USeparator class="py-3" orientation="vertical" />
             <UPopover
               mode="click"
@@ -85,7 +94,7 @@ const items = ref<NavigationMenuItem[][]>([
                   base: 'rounded-none ring-neutral-200 hover:ring-1 active:!bg-neutral-100 data-[state=open]:bg-neutral-100 data-[state=open]:ring-1'
                 }"
               />
-              <template #content>
+              <template #content="{ close }">
                 <div class="flex items-center gap-2">
                   <div>
                     <UInput
@@ -99,34 +108,29 @@ const items = ref<NavigationMenuItem[][]>([
                     <USeparator orientation="horizontal" />
                     <div class="flex flex-col gap-2 p-2 py-2">
                       <div>
-                        <p class="text-xs text-neutral-500 px-3">Merchant</p>
+                        <p class="text-xs text-neutral-500 px-3">{{ $t('common.merchant') }}</p>
                       </div>
                       <UButton
+                        v-for="merchant in merchantStore.items"
+                        :key="merchant.id"
                         :avatar="{
-                          src: 'https://github.com/nuxt.png'
+                          src: merchant.logo_url,
+                          alt: merchant.name
                         }"
                         size="xl"
                         color="neutral"
                         active-variant="soft"
                         variant="ghost"
                         :ui="{ base: 'py-2 rounded-lg' }"
-                        :to="`/m-be03227e-bed9-4db9-8349-9cf772dba2b9`"
+                        :to="`/m-${merchant.id}`"
+                        @click="
+                          () => {
+                            applicationHeaderStore.setLevel1Breadcrumb(merchant, 'merchant');
+                            close();
+                          }
+                        "
                       >
-                        Button
-                      </UButton>
-
-                      <UButton
-                        :avatar="{
-                          src: 'https://github.com/nuxt.png'
-                        }"
-                        size="xl"
-                        color="neutral"
-                        active-variant="soft"
-                        variant="ghost"
-                        :ui="{ base: 'py-2 rounded-lg' }"
-                        :to="`/m-be03227e-bed9-4db9-8349-9cf772dba2b2`"
-                      >
-                        Button
+                        {{ merchant.name }}
                       </UButton>
 
                       <USeparator class="px-0" orientation="horizontal" />
@@ -137,7 +141,7 @@ const items = ref<NavigationMenuItem[][]>([
                         active-variant="soft"
                         variant="ghost"
                         :ui="{ base: 'py-2 rounded-lg' }"
-                        :to="`/m-new`"
+                        :to="`/m`"
                       >
                         Create New
                       </UButton>
@@ -151,15 +155,21 @@ const items = ref<NavigationMenuItem[][]>([
         </div>
       </template>
     </UHeader>
-    <UHeader :ui="{ root: 'h-12', container: 'max-w-none xl:px-0 px-0 sm:px-0 lg:px-0' }">
+    <UHeader
+      v-if="applicationHeaderStore.navigationMenuItems"
+      :ui="{ root: 'h-12', container: 'max-w-none xl:px-0 px-0 sm:px-0 lg:px-0' }"
+    >
       <template #left>
         <UNavigationMenu
           color="neutral"
-          :items="items"
+          :highlight="true"
+          :items="applicationHeaderStore.navigationMenuItems"
+          variant="link"
           class="w-full px-3"
-          :ui="{ item: 'py-1', link: 'px-3 py-2 aria-[current=page]:font-medium' }"
-          highlight
-          highlight-color="primary"
+          :ui="{
+            item: 'py-1',
+            link: 'px-3 py-1 pb-1.5 aria-[current=page]:font-medium'
+          }"
         />
       </template>
     </UHeader>
@@ -174,11 +184,4 @@ const items = ref<NavigationMenuItem[][]>([
   </div>
 </template>
 
-<style scoped>
-.squircle {
-  mask-image: url("data:image/svg+xml,%3csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M100 0C20 0 0 20 0 100s20 100 100 100 100-20 100-100S180 0 100 0Z'/%3e%3c/svg%3e");
-  mask-size: contain;
-  mask-position: center;
-  mask-repeat: no-repeat;
-}
-</style>
+<style scoped></style>
