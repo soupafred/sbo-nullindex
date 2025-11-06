@@ -1,15 +1,70 @@
+import { FetchError } from 'ofetch';
 import { defineStore } from 'pinia';
+
+import { useNuxtApp } from '#app';
+import type { ApiErrorResponse } from '~/types/api';
+import type { TokenExchangeResponse } from '~/types/iam';
 
 export const useAuthStore = defineStore('auth', {
   state: (): {
+    endpoint: string;
+    isLoading: boolean;
+    error: ApiErrorResponse | null;
     accessToken: string;
     refreshToken: string;
   } => {
     return {
-      accessToken:
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NTFiNzA0NC1mOTY1LTRjYTgtYTkzNy03N2UwZjE3ZmRlYTMiLCJzdWIiOiI2ZDkxNTRiMi1lM2IwLTQ0NjQtYWQzYi1jYjRhMGQ1NzlkMzkiLCJpc3MiOiJOdWxsaW5kZXhbSUFNXSIsImlhdCI6MTc2MjI1NTIxMCwiZXhwIjoxNzYyMjU4ODEwLCJlbWFpbCI6Im1pc2FwaXNhdHRvQGdtYWlsLmNvbSIsIm5hbWUiOiJNSVNBIFBpc2F0dG8iLCJhdXRoX3Byb3ZpZGVyIjoiR09PR0xFIiwiYXV0aF9jbGllbnRfaWQiOiJnb29nbGUtbWVyY2hhbnQiLCJ0eXBlIjoiYWNjZXNzIn0.dCv1fO4FhXfVK9jlKKzmVUdIA8n6IoRUQ3wlHIexeNI',
+      endpoint: '/api-gateway/iam/api/v1',
+      isLoading: false,
+      error: null,
+      accessToken: '',
       refreshToken: ''
     };
+  },
+  actions: {
+    async getGoogleLoginRedirectURL() {
+      const { $customFetch } = useNuxtApp();
+      this.error = null;
+      this.isLoading = true;
+
+      try {
+        const response = await $customFetch<{ url: string }>(
+          this.endpoint + '/oauth/sbo/get-google-login-url'
+        );
+        return response.url;
+      } catch (error) {
+        if (error instanceof FetchError) {
+          this.error = error.data;
+        } else {
+          console.error('An unexpected error occurred:', error);
+        }
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async verifyExchangeToken(code: string) {
+      const { $customFetch } = useNuxtApp();
+      this.error = null;
+      this.isLoading = true;
+
+      try {
+        const response = await $customFetch<TokenExchangeResponse>(`${this.endpoint}/exchanges`, {
+          method: 'POST',
+          body: { code }
+        });
+
+        this.accessToken = response.accessToken;
+        this.refreshToken = response.refreshToken;
+      } catch (error) {
+        if (error instanceof FetchError) {
+          this.error = error.data;
+        } else {
+          console.error('An unexpected error occurred:', error);
+        }
+      } finally {
+        this.isLoading = false;
+      }
+    }
   },
   persist: true
 });

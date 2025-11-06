@@ -1,5 +1,21 @@
 <script setup lang="ts">
+import { useAuthStore } from '~/stores/auth';
+
 definePageMeta({ layout: 'auth' });
+const authStore = useAuthStore();
+
+const handleOnClickGoogleLoginButton = async () => {
+  try {
+    const url = await authStore.getGoogleLoginRedirectURL();
+    if (url) {
+      window.location.href = url;
+    } else {
+      console.error('No redirect URL received from auth store');
+    }
+  } catch (error) {
+    console.error('Failed to get Google login redirect URL:', error);
+  }
+};
 </script>
 
 <template>
@@ -23,6 +39,8 @@ definePageMeta({ layout: 'auth' });
             color="neutral"
             size="xl"
             :ui="{ base: 'w-full rounded-full p-3 px-6 cursor-pointer' }"
+            :loading="authStore.isLoading"
+            @click="handleOnClickGoogleLoginButton"
           >
             Login with Google
           </UButton>
