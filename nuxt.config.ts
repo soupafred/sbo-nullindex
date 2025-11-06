@@ -5,7 +5,7 @@ import { defineNuxtConfig } from 'nuxt/config';
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  ssr: false,
+  ssr: true,
   modules: [
     '@nuxt/devtools',
     '@nuxt/test-utils',
@@ -24,7 +24,6 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()]
   },
   i18n: {
-    // baseUrl: process.env.NUXT_PUBLIC_SITE_URL,
     defaultLocale: 'en',
     strategy: 'no_prefix',
     detectBrowserLanguage: {
@@ -44,7 +43,7 @@ export default defineNuxtConfig({
     mode: 'css',
     cssLayer: 'base',
     serverBundle: {
-      collections: ['circle-flags', 'flagpack', 'heroicons', 'logos', 'simple-icons', 'custom']
+      collections: ['circle-flags', 'flagpack', 'logos', 'simple-icons', 'custom']
     },
     customCollections: [
       {

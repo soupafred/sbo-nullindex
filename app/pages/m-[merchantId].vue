@@ -16,7 +16,11 @@ definePageMeta({
 
 onMounted(async () => {
   await merchantStore.fetchItem(merchantId);
-  await router.replace(`/m-${merchantId}/-/overview`);
-  if (merchantStore.item) appHeaderStore.setLevel1Breadcrumb(merchantStore.item, 'merchant');
+  if (merchantStore.item) {
+    await router.replace(`/m-${merchantId}/-/overview`);
+    if (merchantStore.item) appHeaderStore.setLevel1Breadcrumb(merchantStore.item, 'merchant');
+  } else {
+    // await router.replace(`/m-${merchantId}/-/error`);
+  }
 });
 </script>

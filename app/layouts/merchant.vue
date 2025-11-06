@@ -9,22 +9,25 @@ merchantStore.fetchItems();
 
 <template>
   <div>
-    <UHeader :ui="{ root: 'h-14 static', container: 'max-w-none xl:px-3 px-3 sm:px-3 lg:px-3' }">
+    <UHeader
+      :toggle="false"
+      :ui="{ root: 'h-14 static', container: 'max-w-none xl:px-3 px-3 sm:px-3 lg:px-3' }"
+    >
       <template #left>
         <div class="flex items-center gap-0 h-14 overflow-y-hidden w-full">
           <NuxtLink to="/">
             <UAvatar
               size="lg"
               class="rounded-lg squircle"
-              src="https://attendance.techostartup.center/tsc-logo.png"
-              alt="Benjamin Canac"
+              src="/icons/something-logo-light.svg"
+              alt="Something Logo"
             />
           </NuxtLink>
           <USeparator class="h-full ml-3" orientation="vertical" />
           <div class="flex h-14 ring-neutral-200">
             <NuxtLink
               v-if="!merchantStore.itemError"
-              class="hover:bg-neutral-50 hover:ring-1 ring-neutral-200 h-full my-auto"
+              class="h-full my-auto"
               :to="`/m-${applicationHeaderStore.breadcrumb ? applicationHeaderStore.breadcrumb.resource.id : ''}/-/overview`"
             >
               <div class="h-full min-w-75 flex flex-row pr-3">
@@ -40,7 +43,7 @@ merchantStore.fetchItems();
                 <div class="my-auto">
                   <p
                     v-if="!merchantStore.itemGetting && applicationHeaderStore.breadcrumb"
-                    class="text-neutral-500 text-[0.6rem] antialiasing"
+                    class="text-neutral-500 text-[0.6rem] antialiasing uppercase"
                   >
                     {{ $t('common.merchant') }}
                   </p>
@@ -55,14 +58,7 @@ merchantStore.fetchItems();
                 </div>
               </div>
             </NuxtLink>
-            <div v-else class="h-full min-w-75 p-3">
-              <!--              <UAlert-->
-              <!--                color="neutral"-->
-              <!--                variant="soft"-->
-              <!--                :title="merchantStore.itemError.message || $t('common.errorOccurred')"-->
-              <!--                icon="heroicons:exclamation-circle"-->
-              <!--                :ui="{ root: 'rounded-none py-[18px]', icon: 'shrink-0 size-5 my-auto',}"-->
-              <!--              />-->
+            <div v-else class="h-full min-w-75 p-3 pt-2">
               <div class="d-flex flex-row">
                 <div>
                   <p class="text-neutral-500 text-[0.6rem] antialiasing">
@@ -102,7 +98,9 @@ merchantStore.fetchItems();
                       size="xl"
                       variant="soft"
                       color="primary"
+                      class="w-full"
                       :ui="{ base: 'rounded-none rounded-t-md py-3' }"
+                      disabled
                       placeholder="Search..."
                     />
                     <USeparator orientation="horizontal" />
@@ -141,7 +139,7 @@ merchantStore.fetchItems();
                         active-variant="soft"
                         variant="ghost"
                         :ui="{ base: 'py-2 rounded-lg' }"
-                        :to="`/m`"
+                        :to="`/m-new`"
                       >
                         Create New
                       </UButton>
@@ -154,10 +152,14 @@ merchantStore.fetchItems();
           <USeparator class="h-full" orientation="vertical" />
         </div>
       </template>
+      <template #right>
+        <UColorModeButton />
+      </template>
     </UHeader>
     <UHeader
       v-if="applicationHeaderStore.navigationMenuItems"
       :ui="{ root: 'h-12', container: 'max-w-none xl:px-0 px-0 sm:px-0 lg:px-0' }"
+      :toggle="false"
     >
       <template #left>
         <UNavigationMenu
@@ -173,13 +175,8 @@ merchantStore.fetchItems();
         />
       </template>
     </UHeader>
-
-    <!--    <USeparator orientation="horizontal" />-->
-
-    <div class="bg-neutral-50 h-[100vh]">
-      <UContainer>
-        <slot />
-      </UContainer>
+    <div class="bg-neutral-50 dark:bg-primary h-[100vh]">
+      <slot />
     </div>
   </div>
 </template>
