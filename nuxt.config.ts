@@ -53,9 +53,5 @@ export default defineNuxtConfig({
       }
     ]
   },
-  typescript: { typeCheck: true },
-  piniaPluginPersistedstate: {
-    storage: 'localStorage',
-    debug: true
-  }
+  typescript: { typeCheck: true }
 });

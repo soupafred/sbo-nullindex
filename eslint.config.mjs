@@ -2,12 +2,12 @@
 import withNuxt from './.nuxt/eslint.config.mjs';
 
 export default withNuxt([
-  {
-    ignores: [
-      'app/components/ColorBends.vue',
-      'app/components/RotatingText.vue',
-    ],
-  },
+    {
+      ignores: [
+        'app/components/ColorBends.vue',
+        'app/components/RotatingText.vue'
+      ]
+    },
     {
       rules: {
         // Import order for cleaner structure
@@ -39,8 +39,8 @@ export default withNuxt([
             svg: 'always',
             math: 'always'
           }
-        ],
+        ]
       }
     }
-]
-  );
+  ]
+);
