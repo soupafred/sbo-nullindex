@@ -59,8 +59,11 @@ merchantStore.fetchItems();
               </div>
             </NuxtLink>
             <div v-else class="h-full min-w-75 p-3 pt-2">
-              <div class="d-flex flex-row">
-                <div>
+              <div class="flex flex-row">
+                <div class="my-auto pt-2 px-2">
+                  <UIcon name="heroicons:exclamation-triangle-solid" class="text-lg" />
+                </div>
+                <div class="ml-3">
                   <p class="text-neutral-500 text-[0.6rem] antialiasing">
                     Error - {{ merchantStore.itemError.code }}
                   </p>
@@ -86,6 +89,7 @@ merchantStore.fetchItems();
                 color="neutral"
                 class="cursor-pointer px-2"
                 :loading="merchantStore.itemsGetting"
+                loading-icon="heroicons:arrow-path-solid"
                 :ui="{
                   base: 'rounded-none ring-neutral-200 hover:ring-1 active:!bg-neutral-100 data-[state=open]:bg-neutral-100 data-[state=open]:ring-1'
                 }"
@@ -163,6 +167,7 @@ merchantStore.fetchItems();
     >
       <template #left>
         <UNavigationMenu
+          v-if="applicationHeaderStore.navigationMenuItems.length > 0"
           color="neutral"
           :highlight="true"
           :items="applicationHeaderStore.navigationMenuItems"
@@ -173,6 +178,16 @@ merchantStore.fetchItems();
             link: 'px-3 py-1 pb-1.5 aria-[current=page]:font-medium'
           }"
         />
+        <div v-else-if="merchantStore.itemsGetting" class="h-full">
+          <div class="pl-4 pt-2">
+            <UIcon name="heroicons:arrow-path-solid" class="text-neutral-400 animate-spin" />
+          </div>
+        </div>
+        <div v-else class="h-full">
+          <div class="pl-4 pt-2">
+            <UIcon name="heroicons:exclamation-triangle-solid" class="text-lg" />
+          </div>
+        </div>
       </template>
     </UHeader>
     <div class="bg-neutral-50 dark:bg-primary h-[100vh]">

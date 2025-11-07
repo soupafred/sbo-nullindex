@@ -20,7 +20,11 @@ onMounted(async () => {
     await router.replace(`/m-${merchantId}/-/overview`);
     if (merchantStore.item) appHeaderStore.setLevel1Breadcrumb(merchantStore.item, 'merchant');
   } else {
-    // await router.replace(`/m-${merchantId}/-/error`);
+    if (
+      merchantStore.itemError?.code &&
+      ['404', '403', '500'].includes(merchantStore.itemError?.code)
+    )
+      await router.replace(`/m-${merchantId}/-/error`);
   }
 });
 </script>

@@ -48,10 +48,13 @@ export const useAuthStore = defineStore('auth', {
       this.isLoading = true;
 
       try {
-        const response = await $customFetch<TokenExchangeResponse>(`${this.endpoint}/exchanges`, {
-          method: 'POST',
-          body: { code }
-        });
+        const response = await $customFetch<TokenExchangeResponse>(
+          `${this.endpoint}/oauth/exchanges`,
+          {
+            method: 'POST',
+            body: { code }
+          }
+        );
 
         this.accessToken = response.accessToken;
         this.refreshToken = response.refreshToken;

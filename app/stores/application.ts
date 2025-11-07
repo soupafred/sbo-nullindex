@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia';
 
+import type { ApiErrorResponse } from '../types/api';
+
 export const useApplication = defineStore('application', {
-  state: () => {
+  state: (): {
+    isError: boolean;
+    error: ApiErrorResponse | null;
+  } => {
     return {
-      count: 0,
-      name: 'Eduardo',
-      isAdmin: true,
-      items: [],
-      hasChanged: true
+      isError: false,
+      error: null
     };
   },
   persist: true

@@ -21,11 +21,13 @@ const defaultNavigationMenuItemBluePrints = [
 
 export const useApplicationHeaderStore = defineStore('application-header', {
   state: (): {
+    isLoading: boolean;
     currentResourceType: 'merchant' | 'event' | 'ticket' | 'user-profile';
     breadcrumb: HeaderBreadcrumbItem | null;
     navigationMenuItems: NavigationMenuItem[];
   } => {
     return {
+      isLoading: false,
       currentResourceType: 'merchant',
       breadcrumb: null,
       navigationMenuItems: []
