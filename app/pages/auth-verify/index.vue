@@ -25,13 +25,13 @@ onMounted(async () => {
   <div class="min-h-screen flex">
     <!-- Left side: login form -->
     <div class="flex flex-col justify-center items-center w-full px-6">
-      <div class="w-full max-w-sm text-center">
+      <div class="w-full max-w-md text-center">
         <!-- Logo -->
         <div class="flex justify-center mb-4">
-          <UAvatar class="size-20" src="/icons/something-logo-light.svg" />
+          <UAvatar class="size-28" src="/icons/something-logo-light.svg" />
         </div>
-        <p class="text-2xl text-black mb-3">Verifying ...</p>
-        <p class="text-center text-sm mb-12">We do something to get your account verified.</p>
+        <p class="text-2xl text-nuetral mb-3">{{ $t('auth.verifying') }}</p>
+        <p class="text-center text-sm mb-12">{{ $t('auth.wait-for-verify') }}</p>
       </div>
     </div>
   </div>

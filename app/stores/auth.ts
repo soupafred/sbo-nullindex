@@ -9,6 +9,7 @@ export const useAuthStore = defineStore('auth', {
   state: (): {
     endpoint: string;
     isLoading: boolean;
+    isLogedIn: boolean;
     error: ApiErrorResponse | null;
     accessToken: string;
     refreshToken: string;
@@ -16,10 +17,14 @@ export const useAuthStore = defineStore('auth', {
     return {
       endpoint: '/api-gateway/iam/api/v1',
       isLoading: false,
+      isLogedIn: false,
       error: null,
       accessToken: '',
       refreshToken: ''
     };
+  },
+  getters: {
+    isLoggedIn: (state) => !!state.accessToken
   },
   actions: {
     async getGoogleLoginRedirectURL() {
@@ -67,6 +72,14 @@ export const useAuthStore = defineStore('auth', {
       } finally {
         this.isLoading = false;
       }
+    },
+    handleLogOut() {
+      this.accessToken = '';
+      this.refreshToken = '';
+      this.error = null;
+      this.isLoading = false;
+
+      window.location.href = '/auth';
     }
   },
   persist: true
