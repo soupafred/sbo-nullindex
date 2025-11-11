@@ -1,9 +1,11 @@
 <template>
-  <div>Merchant Overall Page</div>
+  <div>
+    <h1>New Merchant</h1>
+  </div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'merchant'
+  layout: 'default'
 });
 </script>

@@ -1,6 +1,20 @@
 {
+  "terms": "利用規約",
+  "privacy": "プライバシーポリシー",
+
   "welcome": "ようこそ",
   "not-found": "ページが見つかりません",
   "not-found-detail": "お探しのページは見つかりませんでした。",
-  "not-found-back": "ホームページに戻る"
+  "not-found-back": "ホームページに戻る",
+
+  "___AUTH_PAGE": "AUTH",
+  "auth.welcome": "Something へようこそ！",
+  "auth.subtitle": "さっそく始めましょう — イベント、チケット、販売を管理できます。",
+  "auth.footer": "続行することで、{brand}の{terms}と{privacy}に同意したことになります。",
+  "auth.continue-with-google": "Googleで続行",
+  "auth.continue-with-apple": "Appleで続行",
+  "auth.verifying": "確認中...",
+  "auth.wait-for-verify": "アカウントを確認中です。しばらくお待ちください。",
+
+  "common.merchant": "ビジネス"
 }

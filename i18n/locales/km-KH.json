@@ -1,6 +1,20 @@
 {
+  "terms": "លក្ខខណ្ឌសេវាកម្ម",
+  "privacy": "គោលការណ៍ភាពឯកជន",
+
   "welcome": "សួរស្ដី",
   "not-found": "រកមិនឃើញទំព័រ",
   "not-found-detail": "ទំព័រដែលអ្នកកំពុងស្វែងរកមិនមានទេ។",
-  "not-found-back": "ត្រលប់ទៅទំព័រដើមវិញ"
+  "not-found-back": "ត្រលប់ទៅទំព័រដើមវិញ",
+
+  "___AUTH_PAGE": "AUTH",
+  "auth.welcome": "សូមស្វាគមន៍មកកាន់ Something!",
+  "auth.subtitle": "ចាប់ផ្តើមភ្លាម — គ្រប់គ្រងព្រឹត្តិការណ៍ សំបុត្រ និងការលក់របស់អ្នក",
+  "auth.footer": "តាមរយៈការភ្ជាប់ អ្នកវបានយល់ព្រមទៅលើ {terms} និង {privacy} របស់ {brand}",
+  "auth.continue-with-google": "បន្តជាមួយ Google",
+  "auth.continue-with-apple": "បន្តជាមួយ Apple",
+  "auth.verifying": "កំពុងផ្ទៀងផ្ទាត់...",
+  "auth.wait-for-verify": "សូមរង់ចាំ ខណៈពេលដែលយើងកំពុងពិនិត្យផ្ទៀងផ្ទាត់គណនីរបស់អ្នក។",
+
+  "common.merchant": "អាជីវកម្ម"
 }
