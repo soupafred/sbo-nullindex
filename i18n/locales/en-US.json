@@ -1,8 +1,20 @@
 {
+  "terms": "Terms of Service",
+  "privacy": "Privacy Policy",
+
   "welcome": "Welcome",
   "not-found": "Page not found",
   "not-found-detail": "The page you are looking for does not exist.",
   "not-found-back": "Back to home",
+
+  "___AUTH_PAGE": "AUTH",
+  "auth.welcome": "Welcome to Something!",
+  "auth.subtitle": "Jump right in — manage your events, tickets, and sales.",
+  "auth.footer": "By continuing, you agree to {brand}'s {terms} and {privacy}.",
+  "auth.continue-with-google": "Continue with Google",
+  "auth.continue-with-apple": "Continue with Apple",
+  "auth.verifying": "Verifying...",
+  "auth.wait-for-verify": "Please wait as we are trying to get your account verified.",
 
   "common.merchant": "Merchant"
 }

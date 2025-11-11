@@ -9,4 +9,13 @@
   html {
     font-family: var(--font-sans);
   }
+
+  .scroll-bar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge Chromium, Opera */
+  }
+
+  .scroll-bar-hide {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+  }
 }
