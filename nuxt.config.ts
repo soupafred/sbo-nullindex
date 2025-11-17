@@ -32,9 +32,9 @@ export default defineNuxtConfig({
       redirectOn: 'root'
     },
     locales: [
-      { code: 'en', name: 'en-US', file: 'en-US.json' },
-      { code: 'jp', name: 'ja-JP', file: 'ja-JP.json' },
-      { code: 'kh', name: 'km-KH', file: 'km-KH.json' }
+      { code: 'en', name: 'English', file: 'en-US.json' },
+      { code: 'jp', name: '日本語', file: 'ja-JP.json' },
+      { code: 'kh', name: 'ភាសាខ្មែរ', file: 'km-KH.json' }
     ]
   },
   icon: {
