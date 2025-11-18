@@ -22,7 +22,7 @@ onMounted(async () => {
 
 const bgLoginCard = computed(() => {
   if (!isClient.value) return 'bg-neutral-950';
-  return colorMode.value === 'dark' ? 'bg-neutral-950' : 'bg-neutral-100';
+  return colorMode.value === 'dark' ? 'bg-neutral-950/70' : 'bg-neutral-100/90';
 });
 const languages = computed<SelectItem[]>(() => {
   return availableLocales.map((code) => initLanguages.find((l) => l.code === code)!);
@@ -63,8 +63,9 @@ const handleOnClickGoogleLoginButton = async () => {
       <div class="flex flex-row absolute inset-0 p-0 lg:p-12">
         <!-- Login Card -->
         <div
+          style="backdrop-filter: saturate(1000) blur(60px) brightness(40%)"
           :class="[
-            'flex flex-col justify-between items-center w-full h-full lg:w-1/2 rounded-xl px-6 lg:mr-12',
+            'flex flex-col justify-between items-center w-full h-full lg:w-1/2 lg:rounded-3xl px-6 lg:mr-12 ',
             bgLoginCard
           ]"
         >
@@ -77,6 +78,7 @@ const handleOnClickGoogleLoginButton = async () => {
                 :items="languages"
                 :icon="langIcon"
                 :ui="{
+                  base: 'min-w-35',
                   trailingIcon:
                     'group-data-[state=open]:rotate-180 transition-transform duration-200'
                 }"
