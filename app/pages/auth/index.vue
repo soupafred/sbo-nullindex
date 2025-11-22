@@ -78,7 +78,11 @@ const handleOnClickGoogleLoginButton = async () => {
                 :items="languages"
                 :icon="langIcon"
                 :ui="{
-                  base: 'min-w-35',
+                  base: 'min-w-35 rounded-xl cursor-pointer',
+                  content: 'rounded-2xl',
+                  leadingIcon: 'rounded-sm',
+                  item: 'cursor-pointer',
+                  itemLeadingIcon: 'rounded-sm',
                   trailingIcon:
                     'group-data-[state=open]:rotate-180 transition-transform duration-200'
                 }"
@@ -86,7 +90,7 @@ const handleOnClickGoogleLoginButton = async () => {
               />
             </div>
             <div>
-              <UColorModeButton size="lg" />
+              <UColorModeButton variant="outline" size="lg" class="rounded-xl cursor-pointer" />
             </div>
           </div>
           <div class="w-full max-w-md text-center">
