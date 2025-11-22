@@ -54,7 +54,7 @@ export const useAuthStore = defineStore('auth', {
 
       try {
         const response = await $customFetch<TokenExchangeResponse>(
-          `${this.endpoint}/oauth/exchanges`,
+          `${this.endpoint}/oauth/tokens/code`,
           {
             method: 'POST',
             body: { code }
@@ -82,5 +82,7 @@ export const useAuthStore = defineStore('auth', {
       window.location.href = '/auth';
     }
   },
-  persist: true
+  persist: {
+    storage: piniaPluginPersistedstate.localStorage()
+  }
 });
