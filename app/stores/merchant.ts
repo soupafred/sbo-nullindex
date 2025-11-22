@@ -39,6 +39,33 @@ export const useMerchantStore = defineStore('merchant', {
   },
   getters: {},
   actions: {
+    async fetchDefault() {
+      const authStore = useAuthStore();
+      const accessToken = authStore.accessToken;
+      const { $customFetch } = useNuxtApp();
+
+      // Avoid loading animation in header once item got
+      if (!this.item) this.itemGetting = true;
+      this.itemError = null;
+
+      try {
+        const response = await $customFetch<ApiResponse<Merchant>>(
+          this.endpoint + '/slug/default',
+          {
+            headers: { Authorization: `Bearer ${accessToken}` }
+          }
+        );
+        this.item = response.data;
+      } catch (error) {
+        if (error instanceof FetchError) {
+          this.itemError = error.data;
+        } else {
+          console.error('An unexpected error occurred:', error);
+        }
+      } finally {
+        this.itemGetting = false;
+      }
+    },
     async fetchItem(uuid: string) {
       const authStore = useAuthStore();
       const accessToken = authStore.accessToken;

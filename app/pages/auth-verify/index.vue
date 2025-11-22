@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'auth' });
 const authStore = useAuthStore();
+const merchantStore = useMerchantStore();
 const route = useRoute();
 const router = useRouter();
 
@@ -9,7 +10,16 @@ onMounted(async () => {
   if (verificationToken) {
     await authStore.verifyExchangeToken(verificationToken);
     if (authStore.accessToken) {
-      await router.replace('/');
+      await merchantStore.fetchDefault();
+
+      if (merchantStore.item) {
+        await router.replace(`/m-${merchantStore.item.slug}/-/overview`);
+      }
+      if (merchantStore.itemError && merchantStore.itemError.code === '404') {
+        await router.replace(`/m-new`);
+      } else {
+        await router.replace('/');
+      }
     } else {
       console.error('Verification failed');
       // Handle verification failure (e.g., show error message)

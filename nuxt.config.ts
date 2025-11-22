@@ -5,7 +5,7 @@ import { defineNuxtConfig } from 'nuxt/config';
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  ssr: true,
+  ssr: false,
   modules: [
     '@nuxt/devtools',
     '@nuxt/test-utils',
