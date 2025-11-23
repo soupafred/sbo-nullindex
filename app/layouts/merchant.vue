@@ -4,7 +4,47 @@ import { useMerchantStore } from '../stores/merchant';
 
 const merchantStore = useMerchantStore();
 const applicationHeaderStore = useApplicationHeaderStore();
-merchantStore.fetchItems();
+const appHeaderStore = useApplicationHeaderStore();
+const route = useRoute();
+const router = useRouter();
+const merchantSlug = route.params.merchantSlug as string;
+const t = useI18n().t;
+
+const defaultNavigationMenuItemBluePrints = ref([
+  {
+    label: t('common.overview'),
+    to: '/-/overview'
+  },
+  {
+    label: t('common.events'),
+    to: '/-/events'
+  },
+  {
+    label: t('common.setting'),
+    to: '/-/settings'
+  }
+]);
+
+onMounted(async () => {
+  await merchantStore.fetchItem(merchantSlug, { bySlug: true });
+  if (merchantStore.item) {
+    await router.replace(`/m-${merchantSlug}/-/overview`);
+    if (merchantStore.item)
+      appHeaderStore.setLevel1Breadcrumb(
+        merchantStore.item,
+        'merchant',
+        defaultNavigationMenuItemBluePrints.value
+      );
+  } else {
+    if (
+      merchantStore.itemError?.code &&
+      ['404', '403', '500'].includes(merchantStore.itemError?.code)
+    )
+      await router.replace(`/m-${merchantSlug}/-/error`);
+  }
+
+  await merchantStore.fetchItems();
+});
 </script>
 
 <template>
@@ -28,7 +68,7 @@ merchantStore.fetchItems();
             <NuxtLink
               v-if="!merchantStore.itemError"
               class="h-full my-auto"
-              :to="`/m-${applicationHeaderStore.breadcrumb ? applicationHeaderStore.breadcrumb.resource.id : ''}/-/overview`"
+              :to="`/m-${applicationHeaderStore.breadcrumb ? applicationHeaderStore.breadcrumb.resource.slug : ''}/-/overview`"
             >
               <div class="h-full min-w-75 flex flex-row pr-3">
                 <UAvatar
@@ -124,10 +164,14 @@ merchantStore.fetchItems();
                         active-variant="soft"
                         variant="ghost"
                         :ui="{ base: 'py-2 rounded-lg' }"
-                        :to="`/m-${merchant.id}`"
+                        :to="`/m-${merchant.slug}/-/overview`"
                         @click="
                           () => {
-                            applicationHeaderStore.setLevel1Breadcrumb(merchant, 'merchant');
+                            applicationHeaderStore.setLevel1Breadcrumb(
+                              merchant,
+                              'merchant',
+                              defaultNavigationMenuItemBluePrints
+                            );
                             close();
                           }
                         "

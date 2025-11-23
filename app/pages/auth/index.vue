@@ -13,6 +13,7 @@ const initLanguages = [
   { code: 'jp', label: '日本語', icon: 'flag:jp-1x1' },
   { code: 'kh', label: 'ភាសាខ្មែរ', icon: 'flag:kh-1x1' }
 ];
+
 const isClient = ref(false);
 const selectedLanguage = ref(locale.value);
 
@@ -117,7 +118,7 @@ const handleOnClickGoogleLoginButton = async () => {
                 block
                 color="neutral"
                 size="xl"
-                :ui="{ base: 'w-full rounded-full p-3 px-6 cursor-pointer' }"
+                :ui="{ base: 'w-full rounded-2xl p-3 px-6 cursor-pointer' }"
                 :loading="authStore.isLoading"
                 @click="handleOnClickGoogleLoginButton"
               >
@@ -130,7 +131,7 @@ const handleOnClickGoogleLoginButton = async () => {
                 disabled
                 color="neutral"
                 size="xl"
-                :ui="{ base: 'w-full rounded-full p-3 px-6 cursor-pointer' }"
+                :ui="{ base: 'w-full rounded-2xl p-3 px-6 cursor-pointer' }"
               >
                 {{ $t('auth.continue-with-apple') }}
               </UButton>

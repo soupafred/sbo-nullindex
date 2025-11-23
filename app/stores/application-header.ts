@@ -3,22 +3,6 @@ import { defineStore } from 'pinia';
 
 import type { HeaderBreadcrumbItem } from '../types/application';
 import type { Merchant } from '../types/merchant';
-
-const defaultNavigationMenuItemBluePrints = [
-  {
-    label: 'overview',
-    to: '/-/overview'
-  },
-  {
-    label: 'events',
-    to: '/-/events'
-  },
-  {
-    label: 'setting',
-    to: '/-/settings'
-  }
-];
-
 export const useApplicationHeaderStore = defineStore('application-header', {
   state: (): {
     isLoading: boolean;
@@ -35,18 +19,24 @@ export const useApplicationHeaderStore = defineStore('application-header', {
   },
   getters: {},
   actions: {
-    setLevel1Breadcrumb(resource: Merchant, type: 'merchant' | 'user-profile') {
+    setLevel1Breadcrumb(
+      resource: Merchant,
+      type: 'merchant' | 'user-profile',
+      defaultNavigationMenuItemBluePrints: { label: string; to: string | null }[]
+    ) {
       const newItem: HeaderBreadcrumbItem = {
         resource_type: type,
         resource_label: type,
         resource: { ...resource },
-        to: `/m-${resource.id}`
+        to: `/m-${resource.slug}`
       };
 
       this.breadcrumb = newItem;
-      this.handleSetupNavigationMenuItems();
+      this.handleSetupNavigationMenuItems(defaultNavigationMenuItemBluePrints);
     },
-    handleSetupNavigationMenuItems() {
+    handleSetupNavigationMenuItems(
+      defaultNavigationMenuItemBluePrints: { label: string; to: string | null }[]
+    ) {
       if (this.breadcrumb === null) {
         this.navigationMenuItems = [];
         return;

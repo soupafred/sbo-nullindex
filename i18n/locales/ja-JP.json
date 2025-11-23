@@ -16,5 +16,12 @@
   "auth.verifying": "確認中...",
   "auth.wait-for-verify": "アカウントを確認中です。しばらくお待ちください。",
 
-  "common.merchant": "ビジネス"
+  "common.merchant": "ビジネス",
+  "common.overview": "概要",
+  "common.event": "イベント",
+  "common.events": "イベント",
+  "common.ticket": "チケット",
+  "common.tickets": "チケット",
+  "common.setting": "設定",
+  "common.settings": "設定"
 }

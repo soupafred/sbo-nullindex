@@ -66,7 +66,7 @@ export const useMerchantStore = defineStore('merchant', {
         this.itemGetting = false;
       }
     },
-    async fetchItem(uuid: string) {
+    async fetchItem(targetValue: string, { bySlug = false } = {}) {
       const authStore = useAuthStore();
       const accessToken = authStore.accessToken;
       const { $customFetch } = useNuxtApp();
@@ -76,7 +76,11 @@ export const useMerchantStore = defineStore('merchant', {
       this.itemError = null;
 
       try {
-        const response = await $customFetch<ApiResponse<Merchant>>(this.endpoint + '/' + uuid, {
+        const finalEndpoint = bySlug
+          ? `${this.endpoint}/slug/${targetValue}`
+          : `${this.endpoint}/${targetValue}`;
+
+        const response = await $customFetch<ApiResponse<Merchant>>(finalEndpoint, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
         this.item = response.data;

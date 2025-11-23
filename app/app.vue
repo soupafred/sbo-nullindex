@@ -1,6 +1,6 @@
 <template>
   <div class="hidden sm:block">
-    <UApp>
+    <UApp :locale="locale">
       <NuxtLoadingIndicator />
 
       <NuxtLayout>
@@ -16,7 +16,7 @@
 <script setup lang="ts">
 const colorMode = useColorMode();
 const color = computed(() => (colorMode.value === 'dark' ? '#1b1718' : 'white'));
-
+const { locale } = useI18n();
 useHead({
   meta: [
     { charset: 'utf-8' },

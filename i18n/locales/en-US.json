@@ -16,5 +16,12 @@
   "auth.verifying": "Verifying...",
   "auth.wait-for-verify": "Please wait as we are trying to get your account verified.",
 
-  "common.merchant": "Merchant"
+  "common.merchant": "Merchant",
+  "common.overview": "Overview",
+  "common.event": "Event",
+  "common.events": "Events",
+  "common.ticket": "Ticket",
+  "common.tickets": "Tickets",
+  "common.setting": "Setting",
+  "common.settings": "Settings"
 }

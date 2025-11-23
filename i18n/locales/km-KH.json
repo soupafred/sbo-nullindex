@@ -16,5 +16,12 @@
   "auth.verifying": "កំពុងផ្ទៀងផ្ទាត់...",
   "auth.wait-for-verify": "សូមរង់ចាំ ខណៈពេលដែលយើងកំពុងពិនិត្យផ្ទៀងផ្ទាត់គណនីរបស់អ្នក។",
 
-  "common.merchant": "អាជីវកម្ម"
+  "common.merchant": "អាជីវកម្ម",
+  "common.overview": "ទូទៅ",
+  "common.event": "ព្រឹត្តិការណ៍",
+  "common.events": "ព្រឹត្តិការណ៍",
+  "common.ticket": "សំបុត្រ",
+  "common.tickets": "សំបុត្រ",
+  "common.setting": "ការកំណត់",
+  "common.settings": "ការកំណត់"
 }
