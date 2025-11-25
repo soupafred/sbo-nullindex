@@ -5,6 +5,8 @@ import { useMerchantStore } from '../stores/merchant';
 const merchantStore = useMerchantStore();
 const applicationHeaderStore = useApplicationHeaderStore();
 const appHeaderStore = useApplicationHeaderStore();
+const userStore = useUserStore();
+const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
 const merchantSlug = route.params.merchantSlug as string;
@@ -25,7 +27,101 @@ const defaultNavigationMenuItemBluePrints = ref([
   }
 ]);
 
+const items = ref([
+  [
+    {
+      label: userStore.item?.full_name || 'N/A',
+      avatar: {
+        src: userStore.item?.avatar_url
+      },
+      type: 'label'
+    }
+  ],
+  [
+    {
+      label: 'Profile',
+      icon: 'i-lucide-user'
+    },
+    {
+      label: 'Billing',
+      icon: 'i-lucide-credit-card'
+    },
+    {
+      label: 'Settings',
+      icon: 'i-lucide-cog',
+      kbds: [',']
+    },
+    {
+      label: 'Keyboard shortcuts',
+      icon: 'i-lucide-monitor'
+    }
+  ],
+  [
+    {
+      label: 'Team',
+      icon: 'i-lucide-users'
+    },
+    {
+      label: 'Invite users',
+      icon: 'i-lucide-user-plus',
+      children: [
+        [
+          {
+            label: 'Email',
+            icon: 'i-lucide-mail'
+          },
+          {
+            label: 'Message',
+            icon: 'i-lucide-message-square'
+          }
+        ],
+        [
+          {
+            label: 'More',
+            icon: 'i-lucide-circle-plus'
+          }
+        ]
+      ]
+    },
+    {
+      label: 'New team',
+      icon: 'i-lucide-plus',
+      kbds: ['meta', 'n']
+    }
+  ],
+  [
+    {
+      label: 'GitHub',
+      icon: 'i-simple-icons-github',
+      to: 'https://github.com/nuxt/ui',
+      target: '_blank'
+    },
+    {
+      label: 'Support',
+      icon: 'i-lucide-life-buoy',
+      to: '/docs/components/dropdown-menu'
+    },
+    {
+      label: 'API',
+      icon: 'i-lucide-cloud',
+      disabled: true
+    }
+  ],
+  [
+    {
+      label: 'Logout',
+      icon: 'i-lucide-log-out',
+      kbds: ['shift', 'meta', 'q'],
+      onSelect: () => {
+        authStore.handleLogOut();
+        router.push('/auth');
+      }
+    }
+  ]
+]);
+
 onMounted(async () => {
+  userStore.fetchCurrentUser();
   await merchantStore.fetchItem(merchantSlug, { bySlug: true });
   if (merchantStore.item) {
     await router.replace(`/m-${merchantSlug}/-/overview`);
@@ -51,11 +147,11 @@ onMounted(async () => {
   <div>
     <UHeader
       :toggle="false"
-      :ui="{ root: 'h-14 static', container: 'max-w-none xl:px-3 px-3 sm:px-3 lg:px-3' }"
+      :ui="{ root: 'h-14 static', container: 'max-w-none px-3 sm:px-3 lg:px-3 xl:px-0' }"
     >
       <template #left>
         <div class="flex items-center gap-0 h-14 overflow-y-hidden w-full">
-          <NuxtLink to="/">
+          <NuxtLink to="/" class="pl-3">
             <UAvatar
               size="lg"
               class="rounded-lg squircle"
@@ -201,7 +297,27 @@ onMounted(async () => {
         </div>
       </template>
       <template #right>
-        <UColorModeButton />
+        <div class="flex h-14">
+          <USeparator class="h-full" orientation="vertical" />
+          <UColorModeButton class="cursor-pointer p-3 px-5 rounded-0" />
+          <USeparator class="h-full" orientation="vertical" />
+          <UButton
+            icon="heroicons:bell"
+            color="neutral"
+            variant="ghost"
+            class="p-3 px-5 cursor-pointer"
+          />
+          <USeparator class="h-full" orientation="vertical" />
+          <UDropdownMenu :items="items" class="p-3 px-4 rounded-0 cursor-pointer">
+            <UButton
+              size="xl"
+              :avatar="{ src: userStore.item?.avatar_url }"
+              color="neutral"
+              variant="ghost"
+            />
+          </UDropdownMenu>
+          <USeparator class="h-full" orientation="vertical" />
+        </div>
       </template>
     </UHeader>
     <UHeader
