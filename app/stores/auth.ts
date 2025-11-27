@@ -78,8 +78,8 @@ export const useAuthStore = defineStore('auth', {
       this.refreshToken = '';
       this.error = null;
       this.isLoading = false;
-
-      window.location.href = '/auth';
+      const route = useRoute();
+      navigateTo(`/auth?redirect=${encodeURIComponent(route.fullPath)}`);
     }
   },
   persist: {
