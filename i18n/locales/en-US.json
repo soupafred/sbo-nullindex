@@ -23,5 +23,31 @@
   "common.ticket": "Ticket",
   "common.tickets": "Tickets",
   "common.setting": "Setting",
-  "common.settings": "Settings"
+  "common.settings": "Settings",
+
+  "merchant": {
+    "title_create": "Create Merchant",
+    "slug": "Slug",
+    "name": "Merchant Name",
+    "name_placeholder": "",
+    "logo_url": "Logo URL",
+    "banner_url": "Banner URL",
+    "description": "Description",
+
+    "slug_required": "Slug is required",
+    "slug_too_long": "Slug is too long",
+    "slug_invalid": "Use lowercase letters, numbers, and hyphens only",
+
+    "name_required": "Name is required",
+    "name_too_long": "Name is too long",
+
+    "logo_url_invalid": "Logo URL must be a valid URL",
+    "banner_url_invalid": "Banner URL must be a valid URL",
+
+    "description_too_long": "Description is too long",
+
+    "btn_save": "Save",
+    "btn_cancel": "Cancel"
+  },
+  "validation": { "invalid": "Invalid" }
 }

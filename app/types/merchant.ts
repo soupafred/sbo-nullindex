@@ -7,3 +7,8 @@ export interface Merchant {
   banner_url?: string;
   description?: string;
 }
+
+export interface MerchantSlugAvailabilityResponse {
+  slug: string;
+  is_available: boolean;
+}

@@ -23,5 +23,30 @@
   "common.ticket": "សំបុត្រ",
   "common.tickets": "សំបុត្រ",
   "common.setting": "ការកំណត់",
-  "common.settings": "ការកំណត់"
+  "common.settings": "ការកំណត់",
+
+  "merchant": {
+    "title_create": "បង្កើតហាង",
+    "slug": "Slug",
+    "name": "ឈ្មោះ",
+    "logo_url": "តំណភ្ជាប់ Logo",
+    "banner_url": "តំណភ្ជាប់ Banner",
+    "description": "សេចក្ដីពិពណ៌នា",
+
+    "slug_required": "សូមបញ្ចូល Slug",
+    "slug_too_long": "Slug វែងពេក",
+    "slug_invalid": "អនុញ្ញាតតែអក្សរតូច លេខ និងសញ្ញា - ប៉ុណ្ណោះ",
+
+    "name_required": "សូមបញ្ចូលឈ្មោះ",
+    "name_too_long": "ឈ្មោះវែងពេក",
+
+    "logo_url_invalid": "តំណភ្ជាប់ Logo មិនត្រឹមត្រូវ",
+    "banner_url_invalid": "តំណភ្ជាប់ Banner មិនត្រឹមត្រូវ",
+
+    "description_too_long": "សេចក្ដីពិពណ៌នាវែងពេក",
+
+    "btn_save": "រក្សាទុក",
+    "btn_cancel": "បោះបង់"
+  },
+  "validation": { "invalid": "មិនត្រឹមត្រូវ" }
 }

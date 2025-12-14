@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 
 import { useAuthStore } from './auth';
 import type { ApiResponse, ApiErrorResponse } from '../types/api';
-import type { Merchant } from '../types/merchant';
+import type { Merchant, MerchantSlugAvailabilityResponse } from '../types/merchant';
 
 import { useNuxtApp } from '#app';
 
@@ -107,6 +107,29 @@ export const useMerchantStore = defineStore('merchant', {
         this.itemsError = (error as Error).message;
       } finally {
         this.itemsGetting = false;
+      }
+    },
+    async validateSlugAvailability(slug: string) {
+      const authStore = useAuthStore();
+      const accessToken = authStore.accessToken;
+      const { $customFetch } = useNuxtApp();
+
+      try {
+        const response = await $customFetch<ApiResponse<MerchantSlugAvailabilityResponse>>(
+          this.endpoint + '/check-slug-availability',
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+            method: 'POST',
+            body: { slug: slug }
+          }
+        );
+        return response.data;
+      } catch (error) {
+        return {
+          slug: slug,
+          is_available: false,
+          error: error
+        };
       }
     }
   },
