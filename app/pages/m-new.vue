@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { FormSubmitEvent } from '@nuxt/ui';
 import { z } from 'zod';
 
 import { useUserStore } from '../stores/user';
@@ -27,14 +26,15 @@ const state = reactive<Partial<Schema>>({
   slug: ''
 });
 const toast = useToast();
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+const userStore = useUserStore();
+async function onSubmit() {
   toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'success' });
-  console.log(event.data);
 }
 
-onMounted(() => {
-  const userStore = useUserStore();
+onMounted(async () => {
+  if (!userStore.item) await userStore.fetchCurrentUser();
 
+  // Recheck in case fetchCurrentUser no work
   if (userStore.item) state.name = userStore.item.full_name + "'s Merchant";
 });
 
@@ -49,9 +49,10 @@ watch(
     state.slug = val
       .trim()
       .toLowerCase()
-      .replace(/[^\w\s-]/g, '') // remove special chars
-      .replace(/\s+/g, '-') // spaces → hyphen
-      .replace(/-+/g, '-'); // collapse multiple hyphens
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/s-merchant$/, '-merchant');
   }
 );
 
@@ -85,6 +86,7 @@ const checkSlugDebounced = debounce(async (slug: string) => {
   isCheckingSlug.value = true;
   try {
     slugAvailability.value = await merchantStore.validateSlugAvailability(slug);
+    slugAvailability.value.is_available = false;
   } finally {
     isCheckingSlug.value = false;
   }
