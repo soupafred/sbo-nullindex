@@ -22,6 +22,26 @@ System specification, code architecture, and the UI design system will be define
 - Vitest + Playwright via `@nuxt/test-utils`
 - pnpm
 
+## Project structure
+
+Code is grouped by type first, using Nuxt's standard directories under `app/`:
+
+```
+app/
+  assets/        components/    composables/
+  layouts/       middleware/    pages/
+  stores/        types/         utils/
+```
+
+| What | Naming | Example |
+|---|---|---|
+| Folders | kebab-case | `components/ticket-type/` |
+| Components, types | PascalCase | `TicketCard.vue`, `Ticket.ts` |
+| Pages, layouts, middleware | kebab-case | `pages/ticket/[id].vue` |
+| Composables, stores, utils | camelCase | `useTicketFilter.ts`, `useTicketStore.ts` |
+
+Routes: `/` is the landing page, ticket features live under `/ticket/...`, and unknown URLs redirect to `/`.
+
 ## Getting started
 
 ```bash
